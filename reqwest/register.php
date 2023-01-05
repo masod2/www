@@ -26,11 +26,11 @@ if (!empty($email) && !empty($password) && !empty($username)) {
 
       // Start a new session
       session_start();
-
       // Store the user's information in the session
       $_SESSION['logged_in'] = true;
       $_SESSION['name'] = $username;
       $_SESSION['email'] = $email;
+      $_POST['username'] = $username;
 
       // Redirect to the dashboard page
       header('Location: ../dashboard.php');

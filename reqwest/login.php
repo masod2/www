@@ -18,7 +18,7 @@ if (!empty($email) && !empty($password)) {
     if ($result->num_rows == 1) {
       // Fetch the user's name
       $row = $result->fetch_assoc();
-      $name = $row['name'];
+      $name = $row['username'];
 
       // Execute the UPDATE query
       $result = $conn->query($UPDATE);
@@ -29,25 +29,28 @@ if (!empty($email) && !empty($password)) {
       // Store the user's information in the session
       $_SESSION['logged_in'] = true;
       $_SESSION['email'] = $email;
-      $_SESSION['name'] = $name;
+      $_SESSION['username'] = $username;
+      header('Location: ../dashboard.php');
 
       // Redirect to the dashboard page
-      header('Location: ../dashboard.php');
     } else {
       // Display an error message
+
       echo "<script>alert('Invalid email or password. Please try again.');</script>";
-      header('Location: ../login.html');
+
+
     }
 
   } else {
     // Display an error message
-    echo "<script>alert('Connection failed: " . $conn->connect_error . "');</script>";
-    header('Location: ../login.html');
+    echo "<script>alert('Connection failed' . $conn->connect_error );</script>";
+
   }
 } else {
   // Display an error message
   echo "<script>alert('Email and password are required.');</script>";
-  header('Location: ../login.html');
+
+
 }
 
 ?>

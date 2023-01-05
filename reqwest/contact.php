@@ -5,36 +5,23 @@ $message = $_POST['message'];
 $to = "masod8842@gmail.com";
 $subject = "New Email Form Submission from $name";
 $headers = "From: $email";
-mail($to, $subject, $message, $headers);
-echo "The email has been sent!";
-
-if (!empty($username) && !empty($password)) {
-  // Connect to the database
-  $server = "localhost";
-  $username_db = "root";
-  $password_db = "";
-  $dbname = "protofolio";
-
-  // Create connection
-  $conn = new mysqli($server, $username_db, $password_db, $dbname);
-
+if (!empty($name) && !empty($email) && !empty($message) && !empty($to) && !empty($subject)) {
+  //send the email to local file 
+  mail($to, $subject, $message, $headers);
+  echo "The email has been sent!";
+  // Include the connection file
+  include 'Connection.php';
   // Check connection
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  } else {
-    $INSERT = "INSERT INTO emails (name, email, message, created_at)
-VALUES ($name,$email,$message, now())";
+  if (!$conn->connect_error) {
+    // Create the SELECT and UPDATE queries
+    $INSERT = "INSERT INTO messages (name, email, message, created_at)
+VALUES ('$name','$email','$message', now())";
 
-    // Prepare statement
-    $stmt = $conn->prepare($INSERT);
-    $stmt->bind_param("ssss", $name, $email, $message);
+    $result = $conn->query($INSERT);
+    if (!$result) {
+      echo "Error: " . mysqli_error($conn);
+    }    $conn->close();
 
-    $stmt->execute();
-    $rnum = $stmt->num_rows;
-
-
-    $stmt->close();
-    $conn->close();
   }
 } else {
   echo "Username and password are required";
