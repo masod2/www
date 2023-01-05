@@ -2,7 +2,7 @@
 
 // Get the form data
 $email = $_POST['email'];
-$password = $_POST['password'];
+$password = sha1($_POST['password']);
 
 if (!empty($email) && !empty($password)) {
   // Include the connection file
@@ -10,7 +10,7 @@ if (!empty($email) && !empty($password)) {
   // Check connection
   if (!$conn->connect_error) {
     // Create the SELECT and UPDATE queries
-    $SELECT = "SELECT email, username FROM users WHERE email = '$email' AND password = '$password' LIMIT 1";
+    $SELECT = "SELECT email, username FROM users WHERE email = '$email' AND password = 'sha1($password)' LIMIT 1";
     $UPDATE = "UPDATE users SET last_login = NOW() WHERE email = '$email'";
     // Execute the SELECT query
     $result = $conn->query($SELECT);

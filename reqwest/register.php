@@ -2,7 +2,8 @@
 // Get the form data
 $username = $_POST['username'];
 $email = $_POST['email'];
-$password = $_POST['password'];
+$password =sha1($_POST['password']) ;
+ 
 $created_at = date("Y-m-d H:i:s");
 
 // Check if the form data is valid 
@@ -28,22 +29,19 @@ if (!empty($email) && !empty($password) && !empty($username)) {
       session_start();
       // Store the user's information in the session
       $_SESSION['logged_in'] = true;
-      $_SESSION['name'] = $username;
       $_SESSION['email'] = $email;
-      $_POST['username'] = $username;
+      $_SESSION['username'] = $username;
 
       // Redirect to the dashboard page
       header('Location: ../dashboard.php');
       echo "<script>alert('New record inserted successfully');</script>";
     } else {
       echo "<script>alert('The email is already registered. Please try again.');</script>";
-      header('Location: ../rejester.html');
 
     }
   } else {
     $error = "Error: " . $sql . "<br>" . $conn->error;
     echo "<script>alert('$error');</script>";
-    header('Location: ../rejester.html');
   }
 
   // Close the connection

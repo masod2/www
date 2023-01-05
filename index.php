@@ -31,12 +31,11 @@
 
 
 </head>
-<?php include('nav&foter\nav.html') ?>
+<?php include('nav&foter\nav.php') ?>
 
 <body>
 
-
-  <!-- ======= Hero Section ======= -->
+   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div class="hero-container">
       <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -49,7 +48,15 @@
           <div class="carousel-item active" style="background-image: url(assets/img/slide/slide-1.jpg);">
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Grow Your Business</h2>
+                <h2 class="animate__animated animate__fadeInDown">
+                  <?php
+                  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                    // User is logged in {
+                    echo "<h2>Hello, " . $_SESSION['username'] . "</h2>";
+                  } else {
+                    echo "<h2>Hello,guest</h2>";
+                  } ?>
+                </h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi
                   ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea
                   voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
@@ -64,7 +71,15 @@
           <div class="carousel-item" style="background-image: url(assets/img/slide/slide-2.jpg);">
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Lorem Ipsum Dolor</h2>
+                <h2 class="animate__animated animate__fadeInDown">
+                  <?php
+                  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                    // User is logged in {
+                    echo "<h2>Hello, " . $_SESSION['username'] . "</h2>";
+                  } else {
+                    echo "<h2>Hello,guest</h2>";
+                  } ?>
+                </h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi
                   ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea
                   voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
@@ -79,7 +94,13 @@
           <div class="carousel-item" style="background-image: url(assets/img/slide/slide-3.jpg);">
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Sequi ea ut et est quaerat</h2>
+                <h2 class="animate__animated animate__fadeInDown"> <?php
+                if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                  // User is logged in {
+                  echo "<h2>Hello, " . $_SESSION['username'] . "</h2>";
+                } else {
+                  echo "<h2>Hello,guest</h2>";
+                } ?></h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi
                   ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea
                   voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
@@ -481,7 +502,7 @@
 
   </main><!-- End #main -->
 
-<?php include('nav&foter\foter.html') ?>
+  <?php include('nav&foter\foter.php') ?>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>

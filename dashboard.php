@@ -34,7 +34,7 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-<?php include('nav&foter\nav.html')
+<?php include('nav&foter\nav.php')
   ?>
 
 <body>
@@ -49,7 +49,7 @@
       <div class="container">
         <div class="d-flex justify-content-between align-items-center">
           <h2>
-            <?php session_start();
+            <?php  
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
               // User is logged in {
               echo "<h2>Hello, " . $_SESSION['username'] . "</h2>";
@@ -123,7 +123,7 @@
 
   </main><!-- End #main -->
 
-  <?php include('nav&foter\foter.html')
+  <?php include('nav&foter\foter.php')
     ?>
 
 
