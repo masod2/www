@@ -7,7 +7,8 @@
     <title>Portfolio Details - dev_Masoud </title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+<?php session_start();
+?>
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -100,7 +101,7 @@ if (isset($_POST['logged_in']) && $_POST['logged_in'] == true) {
         <div class="container">
 
           <div class="d-flex justify-content-between align-items-center">
-            <h2>Portfolio Details</h2>
+            <h2> hellow <?php $_SESSION['name'] ?></h2>
             <ol>
               <li><a href="index.php">Home</a></li>
               <li>Portfolio Details</li>

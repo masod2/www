@@ -1,62 +1,53 @@
 <?php
 
 // Get the form data
- $email = $_POST['email'];
+$email = $_POST['email'];
 $password = $_POST['password'];
 
-if ( !empty($email) && !empty($password)) {
-  // Connect to the database
-  $server = "localhost";
-  $username_db = "root";
-  $password_db = "";
-  $dbname = "protofolio";
-  $created_at = date("Y-m-d H:i:s");
-  // Create connection
-  $conn = new mysqli($server, $username_db, $password_db, $dbname);
-
+if (!empty($email) && !empty($password)) {
+  // Include the connection file
+  include 'Connection.php';
   // Check connection
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  } else {
-    $SELECT = "SELECT email From users Where email = ? AND password =? Limit 1";
-    $UPDATE = "UPDATE  users  set last_login = ? where email = ?";
+  if (!$conn->connect_error) {
+    // Create the SELECT and UPDATE queries
+    $SELECT = "SELECT email, username FROM users WHERE email = '$email' AND password = '$password' LIMIT 1";
+    $UPDATE = "UPDATE users SET last_login = NOW() WHERE email = '$email'";
+    // Execute the SELECT query
+    $result = $conn->query($SELECT);
+    // Check if the email and password are correct
+    if ($result->num_rows == 1) {
+      // Fetch the user's name
+      $row = $result->fetch_assoc();
+      $name = $row['name'];
 
-    // Prepare statement
-    $stmt = $conn->prepare($SELECT);
-    $stmt->bind_param("ss", $email, $password);
-    $stmt->execute();
-    $stmt->bind_result($email);
-    $stmt->store_result();
-    $rnum = $stmt->num_rows;
-    if ($rnum == 1) {
-      $stmt->close();
-      $stmt = $conn->prepare($UPDATE);
-      $stmt->bind_param("ss", $created_at, $email);
-      $stmt->execute();
+      // Execute the UPDATE query
+      $result = $conn->query($UPDATE);
+
       // Start a new session
       session_start();
 
       // Store the user's information in the session
       $_SESSION['logged_in'] = true;
-      $_SESSION['username'] = $username;
       $_SESSION['email'] = $email;
+      $_SESSION['name'] = $name;
+
       // Redirect to the dashboard page
       header('Location: ../dashboard.php');
-      echo "New record inserted sucessfully";
-
     } else {
-      echo "tis yser not exsist try log in again";
+      // Display an error message
+      echo "<script>alert('Invalid email or password. Please try again.');</script>";
+      header('Location: ../login.html');
     }
-    $stmt->close();
-    $conn->close();
+
+  } else {
+    // Display an error message
+    echo "<script>alert('Connection failed: " . $conn->connect_error . "');</script>";
+    header('Location: ../login.html');
   }
 } else {
-  echo "All field are required";
-  die();
+  // Display an error message
+  echo "<script>alert('Email and password are required.');</script>";
+  header('Location: ../login.html');
 }
-
-
-
-
 
 ?>

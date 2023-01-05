@@ -23,7 +23,7 @@ if (!empty($username) && !empty($password)) {
     die("Connection failed: " . mysqli_connect_error());
   } else {
     $INSERT = "INSERT INTO emails (name, email, message, created_at)
-VALUES (?, ?, ?, ?)";
+VALUES ($name,$email,$message, now())";
 
     // Prepare statement
     $stmt = $conn->prepare($INSERT);
