@@ -2,8 +2,8 @@
 // Get the form data
 $username = $_POST['username'];
 $email = $_POST['email'];
-$password =sha1($_POST['password']) ;
- 
+$password = sha1($_POST['password']);
+
 $created_at = date("Y-m-d H:i:s");
 
 // Check if the form data is valid 
@@ -24,12 +24,16 @@ if (!empty($email) && !empty($password) && !empty($username)) {
     if ($result->num_rows == 0) {
       // Execute the INSERT query
       $result = $conn->query($INSERT);
-
+      $SELECT = "SELECT id  From users Where email = '$email' Limit 1";
+      $result = $conn->query($SELECT);
+      $row = $result->fetch_assoc();
+      $user_id = $row['id'];
       // Start a new session
       session_start();
       // Store the user's information in the session
       $_SESSION['logged_in'] = true;
       $_SESSION['email'] = $email;
+      $_SESSION['user_id'] = $user_id;
       $_SESSION['username'] = $username;
 
       // Redirect to the dashboard page
